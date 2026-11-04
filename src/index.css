@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Dark is the default surface — this is a runtime console, so it opens
+     the way the tool is actually used. The light set below is the toggle,
+     not the baseline. Values are "R G B" triples so Tailwind's opacity
+     modifiers keep working (see tailwind.config.js). */
+  :root {
+    --color-canvas: 10 11 13;
+    --color-surface-card: 18 20 23;
+    --color-surface-bone: 23 26 31;
+    --color-surface-raised: 29 33 39;
+    --color-ink: 230 232 235;
+    --color-body: 195 199 205;
+    --color-charcoal: 144 153 163;
+    --color-mute: 111 119 130;
+    --color-ash: 85 92 102;
+    --color-stone: 58 64 73;
+    --color-hairline-strong: 230 232 235;
+    --color-hairline: rgba(255, 255, 255, 0.08);
+
+    --color-primary: 91 140 255;
+    --color-primary-deep: 63 111 224;
+    --color-success: 52 211 153;
+    --color-warning: 240 180 41;
+    --color-danger: 248 113 113;
+    --color-info: 129 140 248;
+  }
+
+  .light {
+    --color-canvas: 246 247 249;
+    --color-surface-card: 255 255 255;
+    --color-surface-bone: 240 242 245;
+    --color-surface-raised: 233 237 242;
+    --color-ink: 20 24 31;
+    --color-body: 51 58 69;
+    --color-charcoal: 90 99 111;
+    --color-mute: 120 129 142;
+    --color-ash: 153 161 173;
+    --color-stone: 195 201 210;
+    --color-hairline-strong: 20 24 31;
+    --color-hairline: rgba(16, 20, 28, 0.1);
+
+    --color-primary: 52 97 224;
+    --color-primary-deep: 39 73 184;
+    --color-success: 15 138 95;
+    --color-warning: 150 97 10;
+    --color-danger: 194 59 59;
+    --color-info: 79 82 201;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-stone)) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-stone) / 0.7);
+    border-radius: 6px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-stone));
+  }
+
+  body {
+    @apply bg-canvas text-body antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  ::selection {
+    background: rgb(var(--color-primary) / 0.3);
+    color: rgb(var(--color-ink));
+  }
+}
+
+@layer components {
+  /* A panel: the only container shape in the console. Flat surface +
+     hairline, no glow, no gradient — depth comes from surface steps. */
+  .panel {
+    @apply rounded-lg border border-hairline bg-surface-card;
+  }
+
+  /* A row inside a panel — one step up from the panel surface. */
+  .row-tile {
+    @apply rounded-md border border-hairline bg-surface-bone;
+  }
+
+  /* Micro-label: the uppercase mono caption used throughout the console. */
+  .micro-label {
+    @apply font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-mute;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-on-primary transition-colors duration-150 hover:bg-primary-deep disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-hairline bg-surface-bone px-3.5 py-2 text-xs font-medium text-body transition-colors duration-150 hover:border-hairline-strong/25 hover:text-ink disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-charcoal transition-colors duration-150 hover:bg-surface-bone hover:text-ink disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  /* Status pill — always carries a label, never colour alone. */
+  .status-pill {
+    @apply inline-flex items-center gap-1.5 rounded px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.1em];
+  }
+
+  .mono-tag {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  /* Legacy aliases kept so existing call sites render in the new system
+     without a class-name sweep: both resolve to the console panel shapes. */
+  .glass-card {
+    @apply panel;
+  }
+  .glass-panel {
+    @apply row-tile;
+  }
+  .glass-panel-strong {
+    @apply rounded-md border border-hairline bg-surface-raised;
+  }
+  .section-eyebrow {
+    @apply micro-label;
+  }
+}
+
+.bg-grid-faint {
+  background-image:
+    linear-gradient(to right, rgb(var(--color-stone) / 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--color-stone) / 0.14) 1px, transparent 1px);
+  background-size: 32px 32px;
+}

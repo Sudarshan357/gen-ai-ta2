@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Applies the stored (or OS) theme before first paint, so there's no
+         flash of the wrong theme while React mounts — see src/hooks/useTheme.js,
+         which owns the toggle itself and keeps this in sync after load. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("consistai:theme");
+          var light = stored ? stored === "light" : window.matchMedia("(prefers-color-scheme: light)").matches;
+          if (light) document.documentElement.classList.add("light");
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ConsistAI — Self-Consistency Prompting</title>
+    <meta
+      name="description"
+      content="ConsistAI improves LLM reasoning reliability by generating multiple independent responses and selecting the most consistent answer through majority voting."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

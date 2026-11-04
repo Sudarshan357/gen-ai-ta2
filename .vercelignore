@@ -1,0 +1,5 @@
+.env
+node_modules
+dist
+Self_Consistency_Prompting.ipynb
+evaluation_chart.png
